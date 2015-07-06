@@ -17,5 +17,3 @@
                                      "Fever"   {"Normal" 0.1
                                                 "Cold"   0.3
                                                 "Dizzy"  0.6}}))
-
-(hmm/viterbi model ["Normal" "Cold" "Dizzy"])
