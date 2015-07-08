@@ -1,2 +1,1 @@
-(ns markov-clj.core
-  (:require [markov-clj.hmm :as hmm]))
+(ns markov-clj.core)
