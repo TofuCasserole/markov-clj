@@ -5,16 +5,17 @@
   (forward-prob [model observations]))
 
 (defn- norm-prob-vec [v]
-  (let [vecsum (esum v)]
-    ))
+  (map (partial * (/ (esum v))) v))
 
-(defrecord MatrixHMM [states observables init-p trans-p emit-p]
+(defn- create-xform [model observation]
+  (mmul (:trans-p model)
+        (diagonal-matrix (get-row (:emit-p model) observation))))
+
+(defrecord MatrixHMM [init-p trans-p emit-p]
   HiddenMarkovModel
   (forward-prob
    [model observations]
-   (reduce (fn [prev-prob ])
+   (reduce (comp norm-prob-vec mmul)
            (:init-p model)
-           (map (fn [obs]
-                  (* (diagonal-matrix (get-row (:emit-p model) obs))
-                     (:trans-p model)))
+           (map (partial create-xform model)
                 observations))))
